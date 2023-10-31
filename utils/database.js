@@ -4,7 +4,7 @@ let isConnected = false // to track the connection status
 
 export const connectToDB = async () => {
 
-  // best practice to set de strictQuery to true
+  // best practice to set the strictQuery to true
   mongoose.set('strictQuery', true)
 
   if(isConnected) {
