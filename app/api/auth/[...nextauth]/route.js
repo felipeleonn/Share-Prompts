@@ -1,7 +1,7 @@
 import NextAuth from "next-auth/next"
 import GoogleProvider from 'next-auth/providers/google'
-import { connectToDB } from '@utils/database'
 import User from '@models/user'
+import { connectToDB } from '@utils/database'
 
 const handler = NextAuth({
   providers: [
@@ -10,15 +10,17 @@ const handler = NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET
     })
   ],
+
+
   async session({ session }) {
     const sessionUser = await User.findOne({
       email: session.user.email
     })
-
     session.user.id = sessionUser._id.toString()
-
     return session
   },
+
+
   async signIn({profile}) {
     try {
       await connectToDB()
@@ -28,6 +30,8 @@ const handler = NextAuth({
         email: profile.email
       })
 
+      
+      // if not, create new user and save it to the DB
       if(!userExists) {
         await User.create({
           email: profile.email,
@@ -35,9 +39,8 @@ const handler = NextAuth({
           image: profile.picture
         })
       }
-      // if not, create new user and save it to the DB
-
       return true
+      
     } catch (error) {
       console.log(error)
       return false
