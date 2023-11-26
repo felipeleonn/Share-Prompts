@@ -30,6 +30,8 @@ const EditPrompt = () => {
     if(promptId) getPromptDetails()
   }, [promptId])
 
+
+
   const updatePrompt = async (e) => {
     // prevent reload, which is the default action from a browser
     e.preventDefault();
@@ -57,6 +59,8 @@ const EditPrompt = () => {
 
   }
 
+
+  
   return (
     <Form
       type="Edit"
